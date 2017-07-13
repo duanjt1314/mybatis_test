@@ -9,4 +9,6 @@ import cn.zdsoft.domain.Teacher;
  */
 public interface TeacherDao {
 	public Teacher findById(int id);
+	
+	public int insert(Teacher teacher);
 }

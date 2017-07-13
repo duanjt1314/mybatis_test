@@ -7,5 +7,12 @@
 	<select id="findById" parameterType="int" resultType="cn.zdsoft.domain.Teacher">
 		select * from stic.teacher where id=#{id}
 	</select>
+	<insert id="insert" parameterType="cn.zdsoft.domain.Teacher">
+		<!-- 从数据库生成主键 -->
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select max(id)+1 from stic.teacher
+		</selectKey>
+		insert into stic.teacher(id,name) values(#{id},#{name})
+	</insert>
 	
 </mapper>
