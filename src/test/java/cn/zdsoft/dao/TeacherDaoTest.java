@@ -28,7 +28,7 @@ public class TeacherDaoTest {
 		session.close();
 	}
 
-	@Test
+	@Test	
 	public void testInsert() throws IOException {
 		// 获取session
 		SqlSession session = DBHelper.getSession();
