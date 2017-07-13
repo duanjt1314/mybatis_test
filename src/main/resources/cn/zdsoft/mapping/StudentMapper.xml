@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的 例如namespace="me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀) -->
+<mapper namespace="cn.zdsoft.mapping.StudentMapper">
+	<!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser， id属性值必须是唯一的，不能够重复 使用parameterType属性指明查询时使用的参数类型， resultType属性指明查询返回的结果集类型 resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回 User类就是users表所对应的实体类 -->
+	<!-- 根据id查询得到一个Student对象 -->
+	<select id="getStudent" parameterType="int" resultType="cn.zdsoft.domain.Student">
+		select * from stic.student where id=#{id}
+	</select>
+	<select id="getAll" resultType="cn.zdsoft.domain.Student">
+		select * from stic.student
+	</select>
+	<!-- 根据条件拼装sql语句，俗称动态SQL -->
+	<select id="getByWhere" parameterType="cn.zdsoft.domain.Student" resultType="cn.zdsoft.domain.Student">
+		select * from stic.student
+		<where>
+			<if test="name != null">
+				and name like #{name}
+			</if>
+			<if test="class_id > 0">
+				and class_id=#{class_id}
+			</if>
+		</where>
+	</select>
+	<!-- 根据名称查询学生信息，这里的参数可以通过序号获取，也可以通过hashmap -->
+	<select id="getByName" resultType="cn.zdsoft.domain.Student">
+		select * from stic.student where name=#{0}
+	</select>
+	<!-- 获取学生编号的最大值 -->
+	<select id="getMaxId" resultType="int">
+		select max(id) from stic.student
+	</select>
+	<insert id="add" parameterType="cn.zdsoft.domain.Student">
+		insert into stic.student(id,name,teacher_id,class_id) values(#{id},#{name},#{teacher_id},#{class_id})
+	</insert>
+	<update id="update" parameterType="cn.zdsoft.domain.Student">
+		update stic.student set name=#{name},teacher_id=#{teacher_id},class_id=#{class_id} where id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		delete stic.student where id=#{id}
+	</delete>
+	<!-- 根据多个编码删除学生，这里的foreach是重点 -->
+	<!-- collection的值有list,array或具体参数名。可参考http://www.cnblogs.com/duanjt/articles/7126018.html -->
+	<delete id="deleteMore">
+		delete stic.student where id in
+		<foreach collection="array" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+</mapper>
