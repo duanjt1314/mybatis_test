@@ -15,6 +15,7 @@
     </environments>
     
     <mappers>
-    	<mapper resource="cn/zdsoft/mapping/StudentMapper.xml"/>    	
+    	<mapper resource="cn/zdsoft/dao/StudentMapper.xml"/>
+    	<mapper resource="cn/zdsoft/dao/TeacherDao.xml"/>
     </mappers>
 </configuration>
