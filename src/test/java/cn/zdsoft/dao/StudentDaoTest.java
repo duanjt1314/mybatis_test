@@ -73,12 +73,18 @@ public class StudentDaoTest {
 		boolean result = new StudentDao().delete(2);
 		assertTrue(result);
 	}
-	
+
 	@Test
 	public void testDeleteMore() {
-		int[] ids=new int[]{1,3};
+		int[] ids = new int[] { 1, 3 };
 		boolean result = new StudentDao().deleteMore(ids);
 		assertTrue(result);
+	}
+
+	@Test
+	public void testGetStudentAndTeacher() {
+		List<Student> list = new StudentDao().getStudentAndTeacher();
+		System.out.println(new Gson().toJson(list));
 	}
 
 }

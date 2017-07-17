@@ -4,14 +4,22 @@
 <mapper namespace="cn.zdsoft.mapping.StudentMapper">
 	<!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser， id属性值必须是唯一的，不能够重复 使用parameterType属性指明查询时使用的参数类型， resultType属性指明查询返回的结果集类型 resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回 User类就是users表所对应的实体类 -->
 	<!-- 根据id查询得到一个Student对象 -->
-	<select id="getStudent" parameterType="int" resultType="cn.zdsoft.domain.Student">
+	<select
+		id="getStudent"
+		parameterType="int"
+		resultType="cn.zdsoft.domain.Student">
 		select * from stic.student where id=#{id}
 	</select>
-	<select id="getAll" resultType="cn.zdsoft.domain.Student">
+	<select
+		id="getAll"
+		resultType="cn.zdsoft.domain.Student">
 		select * from stic.student
 	</select>
 	<!-- 根据条件拼装sql语句，俗称动态SQL -->
-	<select id="getByWhere" parameterType="cn.zdsoft.domain.Student" resultType="cn.zdsoft.domain.Student">
+	<select
+		id="getByWhere"
+		parameterType="cn.zdsoft.domain.Student"
+		resultType="cn.zdsoft.domain.Student">
 		select * from stic.student
 		<where>
 			<if test="name != null">
@@ -23,28 +31,67 @@
 		</where>
 	</select>
 	<!-- 根据名称查询学生信息，这里的参数可以通过序号获取，也可以通过hashmap -->
-	<select id="getByName" resultType="cn.zdsoft.domain.Student">
+	<select
+		id="getByName"
+		resultType="cn.zdsoft.domain.Student">
 		select * from stic.student where name=#{0}
 	</select>
 	<!-- 获取学生编号的最大值 -->
-	<select id="getMaxId" resultType="int">
+	<select
+		id="getMaxId"
+		resultType="int">
 		select max(id) from stic.student
 	</select>
-	<insert id="add" parameterType="cn.zdsoft.domain.Student">
+	<insert
+		id="add"
+		parameterType="cn.zdsoft.domain.Student">
 		insert into stic.student(id,name,teacher_id,class_id) values(#{id},#{name},#{teacher_id},#{class_id})
 	</insert>
-	<update id="update" parameterType="cn.zdsoft.domain.Student">
+	<update
+		id="update"
+		parameterType="cn.zdsoft.domain.Student">
 		update stic.student set name=#{name},teacher_id=#{teacher_id},class_id=#{class_id} where id=#{id}
 	</update>
-	<delete id="delete" parameterType="int">
+	<delete
+		id="delete"
+		parameterType="int">
 		delete stic.student where id=#{id}
 	</delete>
 	<!-- 根据多个编码删除学生，这里的foreach是重点 -->
 	<!-- collection的值有list,array或具体参数名。可参考http://www.cnblogs.com/duanjt/articles/7126018.html -->
 	<delete id="deleteMore">
 		delete stic.student where id in
-		<foreach collection="array" item="item" open="(" close=")" separator=",">
+		<foreach
+			collection="array"
+			item="item"
+			open="("
+			close=")"
+			separator=",">
 			#{item}
 		</foreach>
 	</delete>
+
+	<resultMap
+		type="cn.zdsoft.domain.Student"
+		id="getStudent"
+		autoMapping="true">
+		<result column="teacher_id" property="teacher_id"/>
+		<association
+			property="teacher"
+			column="teacher_id"
+			select="cn.zdsoft.dao.TeacherDao.findById"></association>
+	</resultMap>
+
+	<select
+		id="getStudentAndTeacher"
+		resultMap="getStudent">
+		select * from stic.student
+	</select>
+
+	<select
+		id="getTeacher"
+		parameterType="int"
+		resultType="cn.zdsoft.domain.Teacher">
+		select * from stic.teacher where id=#{id}
+	</select>
 </mapper>

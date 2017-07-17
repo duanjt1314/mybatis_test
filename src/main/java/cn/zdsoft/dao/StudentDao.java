@@ -148,5 +148,16 @@ public class StudentDao {
 		}
 		return false;
 	}
+	
+	public List<Student> getStudentAndTeacher(){
+		List<Student> list=null;
+		try {
+			list = DBHelper.getSession().selectList("cn.zdsoft.mapping.StudentMapper.getStudentAndTeacher");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
 
 }

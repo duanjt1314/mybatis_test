@@ -12,7 +12,23 @@ public class Student {
 	private String name;
 	private int teacher_id;
 	private int class_id;
+	private Teacher teacher;
 	
+	/**
+	 * @return 获取 teacher
+	 */
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	/**
+	 * 设置 teacher
+	 * @param 
+	 */
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+
 	@Override
 	public String toString() {
 		return new Gson().toJson(this);
