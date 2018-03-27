@@ -12,21 +12,21 @@ import cn.zdsoft.domain.Student;
 
 public class StudentDaoTest {
 
-	@Test
+	//@Test
 	public void testGetStudent() {
 		Student stu = new StudentDao().getById(1);
 		assertTrue(stu != null && stu.getName().equals("lisi"));
 		System.out.println(stu);
 	}
 
-	@Test
+	//@Test
 	public void testGetAll() {
 		List<Student> list = new StudentDao().getAll();
 		assertTrue(list != null && list.size() > 0);
 		System.out.println(new Gson().toJson(list));
 	}
 
-	@Test
+	//@Test
 	public void testGetByWhere() {
 		Student stu = new Student();
 		stu.setName("%重庆%");
@@ -36,7 +36,7 @@ public class StudentDaoTest {
 		System.out.println(new Gson().toJson(list));
 	}
 
-	@Test
+	//@Test
 	public void testGetByName() {
 		String name = "重庆人";
 		List<Student> list = new StudentDao().getByName(name);
@@ -44,7 +44,7 @@ public class StudentDaoTest {
 		System.out.println(new Gson().toJson(list));
 	}
 
-	@Test
+	//@Test
 	public void testAdd() {
 		int maxId = new StudentDao().getMaxId();
 		Student stu = new Student();
@@ -57,7 +57,7 @@ public class StudentDaoTest {
 		System.out.println("add success");
 	}
 
-	@Test
+	//@Test
 	public void testUpdate() {
 		Student stu = new StudentDao().getById(1);
 		stu.setName("重庆人");
@@ -68,20 +68,20 @@ public class StudentDaoTest {
 		System.out.println("update success");
 	}
 
-	@Test
+	//@Test
 	public void testDelete() {
 		boolean result = new StudentDao().delete(2);
 		assertTrue(result);
 	}
 
-	@Test
+	//@Test
 	public void testDeleteMore() {
 		int[] ids = new int[] { 1, 3 };
 		boolean result = new StudentDao().deleteMore(ids);
 		assertTrue(result);
 	}
 
-	@Test
+	//@Test
 	public void testGetStudentAndTeacher() {
 		List<Student> list = new StudentDao().getStudentAndTeacher();
 		System.out.println(new Gson().toJson(list));

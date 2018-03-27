@@ -10,7 +10,7 @@
 	<insert id="insert" parameterType="cn.zdsoft.domain.Teacher">
 		<!-- 从数据库生成主键 -->
 		<selectKey keyProperty="id" resultType="int" order="BEFORE">
-			select max(id)+1 from stic.teacher
+			select nvl(max(id),0)+1 from stic.teacher
 		</selectKey>
 		insert into stic.teacher(id,name) values(#{id},#{name})
 	</insert>
